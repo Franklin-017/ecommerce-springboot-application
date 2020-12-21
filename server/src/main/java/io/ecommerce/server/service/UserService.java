@@ -53,6 +53,18 @@ public class UserService {
         }
     }
 
+    // Get user by email
+    public ResponseEntity<Optional<User>> getUserByEmail(String email) {
+        try {
+            Optional<User> user = userDao.findByEmail(email);
+            if(user.isEmpty())
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     // Delete User By Id
     public ResponseEntity<HttpStatus> deleteUser(long id) {
         try {
